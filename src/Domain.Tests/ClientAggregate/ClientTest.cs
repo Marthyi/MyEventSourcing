@@ -7,46 +7,18 @@ namespace Domain.Tests.ClientAggregate
     public class ClientTest
     {
         [Fact]
-        public void Client_Ctor_InstanciateClient_Running()
+        public void Client_ChangeAddress()
         {
-            Client client = new Client()
-            {
-                CreationDate = DateTime.Now,
-                Domicile = new Adresse(25, "rue de la victoire", 92100, "Boulogne-Billancourt"),
-                Id = Guid.NewGuid(),
-                Prénom = new Name("Sean"),
-                Nom = new Name("Paul")
-            };
-
-            Assert.Equal("Sean", client.Prénom.Value);
-            Assert.Equal("Paul", client.Nom.Value);
-
-        }
-
-        [Fact]
-        public void Client_ChangeAdress_Running()
-        {
-            var adresse = new Adresse(25, "rue de la victoire", 92100, "Boulogne-Billancourt");
-
-            var client = new Client()
-            {
-                CreationDate = DateTime.Now,
-                Domicile = adresse,
-                Id = Guid.NewGuid(),
-                Prénom = new Name("Sean"),
-                Nom = new Name("Paul")
-            };
+            var address = new Address(25, "rue de la victoire", 92100, "Boulogne-Billancourt");
+            var client = Client.Create(Guid.NewGuid(), "Sean", "PAUL", address);
 
 
-            client = client.ChangeAdresse(adresse with { City = "PARIS 15", CityNumber = 75100 });
+            client = client.UpdateAddress(address with { City = "PARIS 15", CityNumber = 75100 });
 
-            Assert.Equal("Sean", client.Prénom.Value);
-            Assert.Equal("Paul", client.Nom.Value);
-
-            Assert.Equal("PARIS 15", client.Domicile.City);
-            Assert.Single(client.DomainEvents);
-            Assert.True(client.DomainEvents[0] is ChangementDomicileClient);
-
+            Assert.Equal("PARIS 15", client.HomeAddress.City);
+            Assert.Equal(75100, client.HomeAddress.CityNumber);
+            Assert.True(client.DomainEvents is { Count: 2 });
+            Assert.True(client.DomainEvents[1] is ClientAddressUpdated);
         }
 
     }

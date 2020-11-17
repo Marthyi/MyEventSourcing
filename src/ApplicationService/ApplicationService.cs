@@ -9,15 +9,15 @@
 
         }
 
-        public void CreerClient(CreateClientCommand command)
+        public void CreateClient(CreateClientCommand command)
         {
             var handler = new CreateClientCommandHandler(new ClientRepository());
             handler.Handle(command);
         }
 
-        public void ChangeDomiciliationClient(ChangerDomicileClientCommand command)
+        public void UpdateClientAddress(UpdateClientAddressCommand command)
         {
-            var handler = new ChangerDomicileClientCommandHandler(new ClientRepository());
+            var handler = new UpdateClientAddressCommandHandler(new ClientRepository());
             handler.Handle(command);
 
 

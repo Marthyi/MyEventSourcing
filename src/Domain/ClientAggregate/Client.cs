@@ -10,31 +10,32 @@ namespace Domain
         {
             CreationDate = DateTime.MinValue,
             Id = Guid.Empty,
-            Domicile = null,
-            Nom = null,
-            Prénom = null
+            HomeAddress = null,
+            Lastname = null,
+            Firstname = null
         };
 
-        public Name Nom { get; init; }
-        public Name Prénom { get; init; }
+        public Name Lastname { get; init; }
 
-        public Adresse Domicile { get; init; }
+        public Name Firstname { get; init; }
+
+        public Address HomeAddress { get; init; }
 
         public Client() { }
 
-        public static Client Create(Guid guid ,string Firstname, string Lastname, Adresse adresse)
+        public static Client Create(Guid guid ,string Firstname, string Lastname, Address address)
         {
-            return Empty.Dispatch(new CréationClient(guid, new Name(Firstname), new Name(Lastname), adresse));
+            return Empty.Dispatch(new CréationClient(guid, new Name(Firstname), new Name(Lastname), address));
         }
 
-        public Client ChangeAdresse(Adresse address)
+        public Client UpdateAddress(Address address)
         {
             if (address.City == "Nantes")
             {
-                throw new InvalidOperationException("Cette ville ne rentre pas dans les critères");
+                throw new InvalidOperationException("No go zone detected !");
             }
 
-            return Dispatch(new ChangementDomicileClient(Id, address));
+            return Dispatch(new ClientAddressUpdated(Id, address));
         }
 
         public override Client Apply(ClientEventBase @event) => @event switch
@@ -42,12 +43,12 @@ namespace Domain
             CréationClient e => this with
             {
                 Id = e.AggregateId,
-                Prénom = e.Prénom,
-                Nom = e.Nom,
-                Domicile = e.Adresse,
+                Firstname = e.Prénom,
+                Lastname = e.Nom,
+                HomeAddress = e.Adresse,
                 CreationDate = e.CreationDate
             },
-            ChangementDomicileClient e => this with { Domicile = e.Adresse },
+            ClientAddressUpdated e => this with { HomeAddress = e.Adresse },
             _ => throw new NotImplementedException()
         };
     }

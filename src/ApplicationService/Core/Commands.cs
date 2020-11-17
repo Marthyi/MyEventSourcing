@@ -8,7 +8,7 @@ namespace ApplicationService
 
     }
 
-    public record ChangerDomicileClientCommand(Guid ClientId, Adresse Adresse);
+    public record UpdateClientAddressCommand(Guid ClientId, Address Adresse);
 
-    public record CreateClientCommand(Guid ClientId, string FirstName, string LastName, Adresse adresse);
+    public record CreateClientCommand(Guid ClientId, string FirstName, string LastName, Address adresse);
 }

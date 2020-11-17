@@ -3,7 +3,7 @@ using System;
 
 namespace Domain
 {
-    public record Adresse : ValueType
+    public record Address : ValueType
     {
         private string _street;
         public string Street
@@ -25,7 +25,7 @@ namespace Domain
         public int CityNumber { get; init; }
 
 
-        public Adresse(int? streetNumber, string street, int cityNumber, string city)
+        public Address(int? streetNumber, string street, int cityNumber, string city)
         {
             StreetNumber = streetNumber;
             Street = street;

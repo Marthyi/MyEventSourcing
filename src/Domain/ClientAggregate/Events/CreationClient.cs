@@ -4,7 +4,7 @@ namespace Domain.ClientAggregate.Events
 {
     public class CréationClient : ClientEventBase
     {
-        public CréationClient(Guid clientId, Name prénom, Name nom, Adresse adresse) : base(clientId)
+        public CréationClient(Guid clientId, Name prénom, Name nom, Address adresse) : base(clientId)
         {
             Adresse = adresse;
             Nom = nom;
@@ -16,6 +16,6 @@ namespace Domain.ClientAggregate.Events
         public DateTime CreationDate { get; init; }
         public Name Nom { get; init; }
         public Name Prénom { get; init; }
-        public Adresse Adresse { get; init; }
+        public Address Adresse { get; init; }
     }
 }

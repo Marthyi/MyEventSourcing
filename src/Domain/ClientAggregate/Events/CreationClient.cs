@@ -2,20 +2,20 @@
 
 namespace Domain.ClientAggregate.Events
 {
-    public class CréationClient : ClientEventBase
+    public class ClientCreated : ClientEventBase
     {
-        public CréationClient(Guid clientId, Name prénom, Name nom, Address adresse) : base(clientId)
+        public ClientCreated(Guid clientId, Name firstname, Name lastname, Address adress) : base(clientId)
         {
-            Adresse = adresse;
-            Nom = nom;
-            Prénom = prénom;
+            Address = adress;
+            Lastname = lastname;
+            Firstname = firstname;
 
             CreationDate = DateTime.Now;
         }
 
         public DateTime CreationDate { get; init; }
-        public Name Nom { get; init; }
-        public Name Prénom { get; init; }
-        public Address Adresse { get; init; }
+        public Name Lastname { get; init; }
+        public Name Firstname { get; init; }
+        public Address Address { get; init; }
     }
 }

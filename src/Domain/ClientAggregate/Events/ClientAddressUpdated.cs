@@ -6,13 +6,13 @@ namespace Domain.ClientAggregate.Events
 
     public class ClientAddressUpdated : ClientEventBase
     {
-        public ClientAddressUpdated(Guid clientId, Address adresse) : base(clientId)
+        public ClientAddressUpdated(Guid clientId, Address address) : base(clientId)
         {
-            Adresse = adresse;
+            Address = address;
         }
 
 
-        public Address Adresse { get; }
+        public Address Address { get; }
     }
 
    

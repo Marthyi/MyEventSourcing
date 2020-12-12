@@ -33,6 +33,5 @@ namespace Domain
             City = city;
         }
 
-        public override bool IsValidOrThrow() => true;
     }
 }

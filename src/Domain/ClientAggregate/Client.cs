@@ -20,12 +20,10 @@ namespace Domain
         public Name Firstname { get; init; }
 
         public Address HomeAddress { get; init; }
-
-        public Client() { }
-
+       
         public static Client Create(Guid guid ,string Firstname, string Lastname, Address address)
         {
-            return Empty.Dispatch(new CréationClient(guid, new Name(Firstname), new Name(Lastname), address));
+            return Empty.Dispatch(new ClientCreated(guid, new Name(Firstname), new Name(Lastname), address));
         }
 
         public Client UpdateAddress(Address address)
@@ -40,15 +38,15 @@ namespace Domain
 
         public override Client Apply(ClientEventBase @event) => @event switch
         {
-            CréationClient e => this with
+            ClientCreated e => this with
             {
                 Id = e.AggregateId,
-                Firstname = e.Prénom,
-                Lastname = e.Nom,
-                HomeAddress = e.Adresse,
+                Firstname = e.Firstname,
+                Lastname = e.Lastname,
+                HomeAddress = e.Address,
                 CreationDate = e.CreationDate
             },
-            ClientAddressUpdated e => this with { HomeAddress = e.Adresse },
+            ClientAddressUpdated e => this with { HomeAddress = e.Address },
             _ => throw new NotImplementedException()
         };
     }
